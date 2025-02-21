@@ -1,4 +1,0 @@
-
-
-class CefinData:
-    pass
