@@ -1,5 +1,5 @@
-from cefim.api import CefinData
+from cefim.api import CefimData
 
 __all__ = [
-    'CefinData'
+    'CefimData'
 ]
