@@ -3,7 +3,8 @@ import pandas as pd
 
 class CefimData:
     """
-    This class holds all the API URLs and queries them for the user. Each method is specialized.
+    This class holds all the API URLs and queries them for the user. Each method
+    is specialized.
     """
     _eip = "54.232.94.108"
 
