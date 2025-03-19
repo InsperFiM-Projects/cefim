@@ -5,9 +5,11 @@ class CefimData:
     """
     This class holds all the API URLs and queries them for the user. Each method is specialized.
     """
+    _eip = "54.232.94.108"
 
-    _url_ntnb = "http://52.204.73.41/api/ntnb"  # TODO update address
-    _url_titulos_publicos = "http://52.204.73.41/api/titulospublicos"  # TODO update address
+    def __init__(self):
+        self._url_ntnb = f"http://{self._eip}/api/ntnb"
+        self._url_titulos_publicos = f"http://{self._eip}/api/titulospublicos"
 
     def titulos_publicos(self):
         """
