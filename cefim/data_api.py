@@ -2,15 +2,50 @@ import requests
 import pandas as pd
 
 class CefimData:
-    """
-    This class holds all the API URLs and queries them for the user. Each method
-    is specialized.
-    """
+
+    # AWS's elastic IP for the EC2 instance that is running the API
     _eip = "54.232.94.108"
 
     def __init__(self):
+        self._url_bcb_focus = f"http://{self._eip}/api/bcbfocus"
         self._url_ntnb = f"http://{self._eip}/api/ntnb"
         self._url_titulos_publicos = f"http://{self._eip}/api/titulospublicos"
+
+    def bcb_focus(
+            self,
+            indicator=None,
+            frequency=None,
+            metric=None,
+            survey_type=None,
+    ):
+        """
+        Returns the filtered data from the BCB's focus survey
+
+        Returns
+        -------
+        df: pandas.DataFrame
+        """
+        response = requests.post(
+            self._url_bcb_focus,
+            params={
+                'indicator': indicator,
+                'frequency': frequency,
+                'metric': metric,
+                'survey_type': survey_type,
+            },
+        )
+        if not response.ok:
+            msg = "Unable to get data from database"
+            raise ConnectionError(msg)
+
+        df = pd.DataFrame(response.json())
+        df['date'] = pd.to_datetime(df['date'], unit="ms")
+        df = df.pivot(
+            columns='prediction_scope',
+            index='date',
+            values='value',
+        )
+        return df
 
     def titulos_publicos(self):
         """
